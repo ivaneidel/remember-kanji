@@ -14,7 +14,7 @@ import "./index.scss";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <FlashcardProvider>
-      <BrowserRouter>
+      <BrowserRouter basename={"/remember-kanji"}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="flashcards">
