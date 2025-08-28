@@ -1,0 +1,62 @@
+.canvas-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  .crosshairs {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min(85vw, 85vh);
+    height: min(85vw, 85vh);
+    z-index: 1;
+    touch-action: none;
+    pointer-events: none;
+
+    &:before {
+      content: "";
+      display: block;
+      position: absolute;
+      background-color: #ccc;
+      opacity: 0.2;
+      width: 2px;
+      height: 100%;
+      border-radius: 50%;
+    }
+    &:after {
+      content: "";
+      display: block;
+      position: absolute;
+      background-color: #ccc;
+      opacity: 0.2;
+      height: 2px;
+      width: 100%;
+      border-radius: 50%;
+    }
+  }
+
+  .buttons-section {
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .button {
+      border: none;
+      width: 48px;
+      height: 48px;
+      cursor: pointer;
+      background-color: #cdc6d7;
+      border-radius: 4px;
+      margin-bottom: 8px;
+    }
+  }
+}

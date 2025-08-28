@@ -1,0 +1,68 @@
+.flashcard-view {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  perspective: 1000px; // Adds 3D perspective
+
+  .front,
+  .back {
+    position: absolute;
+    width: 90vw;
+    height: min(calc(1.75 * 90vw), 90vh);
+    backface-visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    font-size: 20px;
+    transition: transform 0.8s cubic-bezier(0.4, 2, 0.6, 1);
+  }
+
+  .front {
+    z-index: 2;
+    transform: rotateY(0deg);
+
+    img {
+      width: 80%;
+    }
+
+    .frame {
+      position: absolute;
+      bottom: 5%;
+      right: 5%;
+    }
+  }
+
+  .back {
+    transform: rotateY(180deg);
+    z-index: 1;
+
+    .key-word {
+      position: absolute;
+      top: 5%;
+      left: 5%;
+    }
+
+    .help {
+      width: 100%;
+      transform: rotateZ(180deg);
+      padding: 50px 16px;
+      border-top: 2px solid #333;
+      border-bottom: 2px solid #333;
+    }
+  }
+
+  &.flipped {
+    .front {
+      transform: rotateY(180deg);
+    }
+    .back {
+      transform: rotateY(0deg);
+    }
+  }
+}
