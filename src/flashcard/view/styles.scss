@@ -21,7 +21,7 @@
   .back {
     position: absolute;
     width: 90vw;
-    height: min(calc(1.75 * 90vw), 90vh);
+    height: min(calc(1.5 * 90vw), 90vh);
     backface-visibility: hidden;
     display: flex;
     align-items: center;
@@ -36,6 +36,7 @@
   .front {
     z-index: 2;
     transform: rotateY(0deg);
+    overflow: hidden;
 
     img {
       width: 80%;
@@ -56,6 +57,7 @@
       position: absolute;
       top: 5%;
       left: 5%;
+      font-size: 24px;
     }
 
     .help {
