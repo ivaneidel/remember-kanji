@@ -37,7 +37,7 @@ const NewFlashcard = () => {
 
     setFlashcards(newFlashcards);
 
-    navigate("/flashcards", { replace: true });
+    navigate(-1);
   }, [
     image,
     frame,
