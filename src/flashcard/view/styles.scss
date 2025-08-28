@@ -7,6 +7,16 @@
   height: 100%;
   perspective: 1000px; // Adds 3D perspective
 
+  &.primitive {
+    .back {
+      .key-word {
+        &:after {
+          content: "*";
+        }
+      }
+    }
+  }
+
   .front,
   .back {
     position: absolute;

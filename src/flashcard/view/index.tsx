@@ -28,7 +28,9 @@ const FlashcardView = ({ paramFlashcard, startFlipped }: PropTypes) => {
 
   return (
     <div
-      className={`flashcard-view ${flipped ? "flipped" : ""}`}
+      className={`flashcard-view ${flipped ? "flipped" : ""} ${
+        flashcard.primitive ? "primitive" : ""
+      }`}
       onClick={() => setFlipped(!flipped)}
     >
       <div className="front">

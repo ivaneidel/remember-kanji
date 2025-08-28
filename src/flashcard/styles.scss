@@ -25,6 +25,14 @@
     margin-bottom: 8px;
     cursor: pointer;
 
+    &.primitive {
+      .key-word {
+        &:after {
+          content: "*";
+        }
+      }
+    }
+
     .frame {
       display: flex;
       align-items: center;
