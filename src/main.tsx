@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { HashRouter, Route, Routes } from "react-router";
 
 import Home from "./home/index.tsx";
 import Flashcards from "./flashcard/index.tsx";
@@ -14,7 +14,7 @@ import "./index.scss";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <FlashcardProvider>
-      <BrowserRouter basename={"/remember-kanji"}>
+      <HashRouter>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="flashcards">
@@ -24,7 +24,7 @@ createRoot(document.getElementById("root")!).render(
           </Route>
           <Route path="/review" element={<ReviewFlashcards />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </FlashcardProvider>
   </StrictMode>
 );
