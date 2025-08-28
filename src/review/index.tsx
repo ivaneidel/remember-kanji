@@ -18,7 +18,17 @@ const ReviewFlashcards = () => {
 
   return (
     <div className="review">
-      <FlashcardView startFlipped paramFlashcard={flashcardsToReview[active]} />
+      {flashcardsToReview.map((flashcard, index) => {
+        if (index !== active) return null;
+
+        return (
+          <FlashcardView
+            startFlipped
+            paramFlashcard={flashcard}
+            key={flashcard.id}
+          />
+        );
+      })}
       <div className="buttons-section">
         <button
           className="button previous"

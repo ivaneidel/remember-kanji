@@ -30,7 +30,7 @@ const Flashcards = () => {
       {flashcards.map((flashcard) => (
         <div
           className={`flashcard-tile ${flashcard.primitive ? "primitive" : ""}`}
-          key={flashcard.keyWord}
+          key={flashcard.id}
           onClick={() => {
             navigate(`/flashcards/${flashcard.id}`);
           }}
