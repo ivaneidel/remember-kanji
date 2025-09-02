@@ -9,6 +9,22 @@
   height: 100%;
   perspective: 1000px; // Adds 3D perspective
 
+  .review-completion-percentage {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 16px;
+    background-color: #ccc;
+
+    .bar {
+      display: block;
+      height: 100%;
+      background-color: #986ad8;
+      transition: all 0.1s ease-in-out;
+    }
+  }
+
   .buttons-section {
     position: absolute;
     bottom: 2%;
