@@ -5,7 +5,7 @@ import { useFlashcards } from "../flashcard/context/FlashcardContext";
 import { Flashcard } from "../types";
 import { v4 } from "uuid";
 
-const _fakeDataEnabled = true;
+const _fakeDataEnabled = false;
 
 const Settings = () => {
   const [loading, setLoading] = useState(false);
