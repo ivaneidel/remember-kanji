@@ -22,6 +22,9 @@ const Home = () => {
       >
         <span>REVIEW FLASHCARDS</span>
       </div>
+      <button className="settings-button" onClick={() => navigate("/settings")}>
+        三
+      </button>
       <AddNewFlashcardButton />
     </div>
   );

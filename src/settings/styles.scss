@@ -1,0 +1,29 @@
+.settings {
+  padding: 16px;
+  .title {
+    margin-bottom: 32px;
+    span {
+      font-size: 26px;
+      color: #65468f;
+    }
+  }
+  .tile-list {
+    .settings-tile {
+      padding: 16px;
+      cursor: pointer;
+
+      &:not(:last-of-type) {
+        border-bottom: 1px solid #ccc;
+      }
+
+      span {
+        color: #986ad8;
+      }
+    }
+  }
+  .loading {
+    display: block;
+    margin-top: 16px;
+    opacity: 0.5;
+  }
+}

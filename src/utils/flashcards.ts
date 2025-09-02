@@ -27,3 +27,29 @@ export const saveAllFlashcards = async (flashcards: Flashcard[]) => {
   }
   await tx.done;
 };
+
+export const exportFlashcards = async () => {
+  const flashcards = await getAllFlashcards();
+  const serialized = JSON.stringify(flashcards);
+  const blob = new Blob([serialized], { type: "application/octet-stream" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "flashcards.kanji";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+};
+
+export const importFlashcards = async (file: File) => {
+  try {
+    const text = await file.text();
+    const imported = JSON.parse(text);
+    if (Array.isArray(imported)) {
+      return imported as Flashcard[];
+    }
+  } catch {
+    // Ignore
+  }
+};

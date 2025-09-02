@@ -19,6 +19,7 @@ type FlashcardContextType = {
   flashcards: Flashcard[];
   flashcardsById: FlashcardsById;
   setFlashcards: (value: Flashcard[]) => void;
+  deleteFlashcardById: (id: string) => void;
 };
 
 const FlashcardContext = createContext<FlashcardContextType | undefined>(
@@ -52,6 +53,13 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
     saveAllFlashcards(newFlashcards);
   }, []);
 
+  const deleteFlashcardById = useCallback(
+    (id: string) => {
+      onSetFlashcards(flashcards.filter((f) => f.id !== id));
+    },
+    [onSetFlashcards, flashcards]
+  );
+
   const loadFlashcards = useCallback(async () => {
     onSetFlashcards(await getAllFlashcards());
   }, [onSetFlashcards]);
@@ -62,7 +70,12 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <FlashcardContext.Provider
-      value={{ flashcards, flashcardsById, setFlashcards: onSetFlashcards }}
+      value={{
+        flashcards,
+        flashcardsById,
+        setFlashcards: onSetFlashcards,
+        deleteFlashcardById,
+      }}
     >
       {children}
     </FlashcardContext.Provider>

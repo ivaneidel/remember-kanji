@@ -1,3 +1,5 @@
+@use "/src/styles/mixins" as *;
+
 .review {
   position: relative;
   display: flex;
@@ -17,12 +19,7 @@
     justify-content: space-between;
 
     .button {
-      border: none;
-      width: 48px;
-      height: 48px;
-      cursor: pointer;
-      background-color: #cdc6d7;
-      border-radius: 4px;
+      @include icon-button;
       margin-bottom: 8px;
     }
   }

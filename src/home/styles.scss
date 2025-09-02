@@ -1,8 +1,33 @@
+@use "/src/styles/mixins.scss" as *;
+
 .home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
   .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 20vh;
+    border-radius: 8px;
     cursor: pointer;
     width: 100%;
     padding: 16px;
     color: #986ad8;
+    border: 1px solid #986ad8cc;
+
+    &:nth-child(1) {
+      margin-bottom: 16px;
+    }
+  }
+  .settings-button {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    @include icon-button;
   }
 }
