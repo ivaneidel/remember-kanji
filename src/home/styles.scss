@@ -1,4 +1,4 @@
-@use "/src/styles/mixins.scss" as *;
+@use "/src/styles/global.scss" as *;
 
 .home {
   display: flex;
@@ -17,8 +17,8 @@
     cursor: pointer;
     width: 100%;
     padding: 16px;
-    color: #986ad8;
-    border: 1px solid #986ad8cc;
+    color: $accent-color;
+    border: 1px solid transparentize($primary-color, 0.3);
 
     &:nth-child(1) {
       margin-bottom: 16px;

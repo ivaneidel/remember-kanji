@@ -1,10 +1,12 @@
+@use "/src/styles/global" as *;
+
 .settings {
   padding: 16px;
   .title {
     margin-bottom: 32px;
     span {
       font-size: 26px;
-      color: #65468f;
+      color: $secondary-color;
     }
   }
   .tile-list {
@@ -17,7 +19,7 @@
       }
 
       span {
-        color: #986ad8;
+        color: $accent-color;
       }
     }
   }

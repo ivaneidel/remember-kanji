@@ -1,25 +1,35 @@
 import { useEffect, useMemo, useState } from "react";
-import { Flashcard } from "../types";
-import { useFlashcards } from "../flashcard/context/FlashcardContext";
+import { Flashcard } from "../../types";
+import { useFlashcards } from "../../flashcard/context/FlashcardContext";
 import { shuffle } from "lodash";
-import FlashcardView from "../flashcard/view";
+import FlashcardView from "../../flashcard/view";
+import { useParams } from "react-router";
 
 import "./styles.scss";
 
 const ReviewFlashcards = () => {
+  const params = useParams();
   const { flashcards } = useFlashcards();
 
   const [flashcardsToReview, setFlashcardsToReview] = useState<Flashcard[]>([]);
   const [active, setActive] = useState(0);
 
-  const reviewPercentage = useMemo(
-    () => (active * 100) / (flashcards.length - 1),
-    [active, flashcards]
-  );
+  const reviewPercentage = useMemo(() => {
+    const divider = flashcardsToReview.length - 1;
+
+    if (divider < 1) return 100;
+
+    return (active * 100) / divider;
+  }, [active, flashcardsToReview]);
 
   useEffect(() => {
-    setFlashcardsToReview(shuffle(flashcards));
-  }, [flashcards]);
+    const shuffled = shuffle(flashcards);
+    if (params.reviewSize) {
+      setFlashcardsToReview(shuffled.slice(0, Number(params.reviewSize)));
+    } else {
+      setFlashcardsToReview(shuffled);
+    }
+  }, [flashcards, params]);
 
   return (
     <div className="review">

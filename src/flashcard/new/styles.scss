@@ -1,3 +1,5 @@
+@use "/src/styles/global" as *;
+
 .new-flashcard-container {
   display: flex;
   align-items: center;
@@ -30,7 +32,7 @@
 
   .save-button {
     border: none;
-    background-color: #cdc6d7;
+    background-color: $primary-color;
     padding: 8px 16px;
     font-size: 16px;
     border-radius: 4px;
