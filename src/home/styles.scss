@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "/src/styles/global.scss" as *;
 
 .home {
@@ -18,7 +19,7 @@
     width: 100%;
     padding: 16px;
     color: $accent-color;
-    border: 1px solid transparentize($primary-color, 0.3);
+    border: 1px solid color.adjust($primary-color, $alpha: -0.3);
 
     &:nth-child(1) {
       margin-bottom: 16px;
