@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { HashRouter, Route, Routes } from "react-router";
+import { registerSW } from "virtual:pwa-register";
 
 import Home from "./home/index.tsx";
 import Flashcards from "./flashcard/index.tsx";
@@ -32,3 +33,5 @@ createRoot(document.getElementById("root")!).render(
     </FlashcardProvider>
   </StrictMode>
 );
+
+registerSW();
