@@ -16,7 +16,7 @@ const Flashcards = () => {
     if (search.trim()) {
       setFilteredFlashcards(
         flashcards.filter((f) =>
-          f.keyWord.includes(search.trim().toLowerCase())
+          f.keyWord.toLowerCase().includes(search.trim().toLowerCase())
         )
       );
       return;
