@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { JSX, useMemo, useState } from "react";
 import { useParams } from "react-router";
 import { useFlashcards } from "../context/FlashcardContext";
 import { Flashcard } from "../../types";
@@ -8,9 +8,16 @@ import "./styles.scss";
 interface PropTypes {
   paramFlashcard?: Flashcard;
   startFlipped?: boolean;
+  extraContentFront?: JSX.Element;
+  extraContentBack?: JSX.Element;
 }
 
-const FlashcardView = ({ paramFlashcard, startFlipped }: PropTypes) => {
+const FlashcardView = ({
+  paramFlashcard,
+  startFlipped,
+  extraContentFront,
+  extraContentBack,
+}: PropTypes) => {
   const params = useParams();
   const { flashcardsById } = useFlashcards();
 
@@ -36,10 +43,12 @@ const FlashcardView = ({ paramFlashcard, startFlipped }: PropTypes) => {
       <div className="front">
         <img src={flashcard.image} />
         <span className="frame">{flashcard.frame || "*"}</span>
+        {extraContentFront}
       </div>
       <div className="back">
         <span className="key-word">{flashcard.keyWord.toUpperCase()}</span>
         {flashcard.help && <span className="help">{flashcard.help}</span>}
+        {extraContentBack}
       </div>
     </div>
   );

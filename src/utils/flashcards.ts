@@ -3,12 +3,17 @@ import { Flashcard } from "../types";
 
 const DB_NAME = "remember_kanji";
 const STORE_NAME = "flashcards";
+const MISSED_STORE_NAME = "missed_flashcards";
 
 const getDB = () =>
-  openDB(DB_NAME, 1, {
+  openDB(DB_NAME, 2, {
     upgrade(db) {
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME, { keyPath: "id" });
+      }
+
+      if (!db.objectStoreNames.contains(MISSED_STORE_NAME)) {
+        db.createObjectStore(MISSED_STORE_NAME);
       }
     },
   });
@@ -18,12 +23,27 @@ export const getAllFlashcards = async () => {
   return (await db.getAll(STORE_NAME)) as Flashcard[];
 };
 
+export const getAllMissedFlashcards = async () => {
+  const db = await getDB();
+  return (await db.getAllKeys(MISSED_STORE_NAME)) as string[];
+};
+
 export const saveAllFlashcards = async (flashcards: Flashcard[]) => {
   const db = await getDB();
   const tx = db.transaction(STORE_NAME, "readwrite");
   await tx.objectStore(STORE_NAME).clear();
   for (const flashcard of flashcards) {
     await tx.objectStore(STORE_NAME).put(flashcard);
+  }
+  await tx.done;
+};
+
+export const saveAllMissedFlashcards = async (missedFlashcards: string[]) => {
+  const db = await getDB();
+  const tx = db.transaction(MISSED_STORE_NAME, "readwrite");
+  await tx.objectStore(MISSED_STORE_NAME).clear();
+  for (const missedFlashcard of missedFlashcards) {
+    await tx.objectStore(MISSED_STORE_NAME).put(true, missedFlashcard);
   }
   await tx.done;
 };

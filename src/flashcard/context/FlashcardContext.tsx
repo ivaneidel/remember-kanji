@@ -9,10 +9,19 @@ import {
   useCallback,
 } from "react";
 import { Flashcard } from "../../types";
-import { getAllFlashcards, saveAllFlashcards } from "../../utils/flashcards";
+import {
+  getAllFlashcards,
+  getAllMissedFlashcards,
+  saveAllFlashcards,
+  saveAllMissedFlashcards,
+} from "../../utils/flashcards";
 
 type FlashcardsById = {
   [id: string]: Flashcard;
+};
+
+type MissedFlashcardsById = {
+  [id: string]: boolean;
 };
 
 type FlashcardContextType = {
@@ -20,6 +29,11 @@ type FlashcardContextType = {
   flashcardsById: FlashcardsById;
   setFlashcards: (value: Flashcard[]) => void;
   deleteFlashcardById: (id: string) => void;
+  // Missed
+  missedFlashcards: string[];
+  missedFlashcardsById: MissedFlashcardsById;
+  addMissedFlashcardById: (id: string) => void;
+  deleteMissedFlashcardById: (id: string) => void;
 };
 
 const FlashcardContext = createContext<FlashcardContextType | undefined>(
@@ -29,6 +43,9 @@ const FlashcardContext = createContext<FlashcardContextType | undefined>(
 export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
   const [flashcardsById, setFlashcardsById] = useState<FlashcardsById>({});
+  const [missedFlashcards, setMissedFlashcards] = useState<string[]>([]);
+  const [missedFlashcardsById, setMissedFlashcardsById] =
+    useState<MissedFlashcardsById>({});
 
   const onSetFlashcards = useCallback((newFlashcards: Flashcard[]) => {
     newFlashcards.sort((f1, f2) => {
@@ -39,7 +56,7 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
       return f1.frame < f2.frame ? -1 : 1;
     });
 
-    // Set the in the state
+    // Set them in the state
     setFlashcards(newFlashcards);
 
     // Set them in the dictionary
@@ -53,6 +70,22 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
     saveAllFlashcards(newFlashcards);
   }, []);
 
+  const onSetMissedFlashcards = useCallback((newMissedFlashcards: string[]) => {
+    const cleanList = [...new Set(newMissedFlashcards)];
+    // Set them in the state
+    setMissedFlashcards(cleanList);
+
+    // Set them in the dictionary
+    const byId: MissedFlashcardsById = {};
+    cleanList.forEach((id) => {
+      byId[id] = true;
+    });
+    setMissedFlashcardsById(byId);
+
+    // Save them in storage
+    saveAllMissedFlashcards(cleanList);
+  }, []);
+
   const deleteFlashcardById = useCallback(
     (id: string) => {
       onSetFlashcards(flashcards.filter((f) => f.id !== id));
@@ -60,13 +93,28 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
     [onSetFlashcards, flashcards]
   );
 
-  const loadFlashcards = useCallback(async () => {
+  const addMissedFlashcardById = useCallback(
+    (id: string) => {
+      onSetMissedFlashcards([...missedFlashcards, id]);
+    },
+    [onSetMissedFlashcards, missedFlashcards]
+  );
+
+  const deleteMissedFlashcardById = useCallback(
+    (id: string) => {
+      onSetMissedFlashcards(missedFlashcards.filter((mId) => mId !== id));
+    },
+    [onSetMissedFlashcards, missedFlashcards]
+  );
+
+  const loadData = useCallback(async () => {
     onSetFlashcards(await getAllFlashcards());
-  }, [onSetFlashcards]);
+    onSetMissedFlashcards(await getAllMissedFlashcards());
+  }, [onSetFlashcards, onSetMissedFlashcards]);
 
   useEffect(() => {
-    loadFlashcards();
-  }, [loadFlashcards]);
+    loadData();
+  }, [loadData]);
 
   return (
     <FlashcardContext.Provider
@@ -75,6 +123,10 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
         flashcardsById,
         setFlashcards: onSetFlashcards,
         deleteFlashcardById,
+        missedFlashcards,
+        missedFlashcardsById,
+        addMissedFlashcardById,
+        deleteMissedFlashcardById,
       }}
     >
       {children}

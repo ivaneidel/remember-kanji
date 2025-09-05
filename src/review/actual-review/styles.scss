@@ -25,6 +25,25 @@
     }
   }
 
+  .flashcard-view {
+    .hit-miss-buttons {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      bottom: 32px;
+
+      .button {
+        @include icon-button;
+
+        &.miss {
+          margin-right: 16px;
+        }
+      }
+    }
+  }
+
   .buttons-section {
     position: absolute;
     bottom: 2%;
@@ -37,6 +56,26 @@
     .button {
       @include icon-button;
       margin-bottom: 8px;
+    }
+  }
+
+  .reach-end {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 32px;
+
+    span {
+      margin-bottom: 48px;
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+      color: $accent-color;
+    }
+
+    button {
+      @include text-button;
     }
   }
 }

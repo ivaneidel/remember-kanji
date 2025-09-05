@@ -5,10 +5,15 @@ $secondary-color: #65468f;
 @mixin icon-button {
   border: none;
   width: 48px;
+  min-width: 48px;
   height: 48px;
+  min-height: 48px;
   cursor: pointer;
   background-color: $primary-color;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 @mixin text-button {
@@ -20,4 +25,8 @@ $secondary-color: #65468f;
   color: $secondary-color;
   font-weight: bold;
   font-size: 16px;
+
+  &:disabled {
+    opacity: 0.6;
+  }
 }

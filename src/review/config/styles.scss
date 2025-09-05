@@ -35,7 +35,15 @@
       font-size: 32px;
     }
   }
+
   button {
     @include text-button;
+  }
+
+  .divider {
+    width: 80%;
+    height: 1px;
+    background-color: #ccc;
+    margin: 32px 0;
   }
 }
