@@ -52,7 +52,7 @@ const FlashcardTile = ({
     >
       <span className="frame">{flashcard.frame || "*"}</span>
       <span className="key-word">{flashcard.keyWord.toUpperCase()}</span>
-      <button onClick={(e) => editFlashcard(e, flashcard)}>✏️</button>
+      <button onClick={(e) => editFlashcard(e, flashcard)}>🖋️</button>
       <button onClick={(e) => deleteFlashcard(e, flashcard)}>🗑️</button>
     </div>
   );

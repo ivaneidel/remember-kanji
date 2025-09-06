@@ -40,7 +40,7 @@ const EditFlashcard = () => {
       const _flashcard = flashcardsById[params.flashcardId];
       if (_flashcard) {
         setFlashcard(_flashcard);
-        setFrame(`${_flashcard.frame}` || "");
+        setFrame(`${_flashcard.frame || ""}`);
         setKeyWord(_flashcard.keyWord);
         setHelp(_flashcard.help || "");
         setPrimitive(_flashcard.primitive);
