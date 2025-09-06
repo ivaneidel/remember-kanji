@@ -28,6 +28,7 @@ type FlashcardContextType = {
   flashcards: Flashcard[];
   flashcardsById: FlashcardsById;
   setFlashcards: (value: Flashcard[]) => void;
+  addFlashcard: (value: Flashcard) => void;
   deleteFlashcardById: (id: string) => void;
   // Missed
   missedFlashcards: string[];
@@ -69,6 +70,28 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
     // Save them in storage
     saveAllFlashcards(newFlashcards);
   }, []);
+
+  const addFlashcard = useCallback(
+    (flashcard: Flashcard) => {
+      const isEdit = !!flashcardsById[flashcard.id];
+
+      let newFlashcards: Flashcard[];
+      if (isEdit) {
+        newFlashcards = flashcards.map((f) => {
+          if (f.id !== flashcard.id) {
+            return f;
+          }
+
+          return flashcard;
+        });
+      } else {
+        newFlashcards = [...flashcards, flashcard];
+      }
+
+      onSetFlashcards(newFlashcards);
+    },
+    [flashcards, flashcardsById, onSetFlashcards]
+  );
 
   const onSetMissedFlashcards = useCallback((newMissedFlashcards: string[]) => {
     const cleanList = [...new Set(newMissedFlashcards)];
@@ -122,6 +145,7 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
         flashcards,
         flashcardsById,
         setFlashcards: onSetFlashcards,
+        addFlashcard,
         deleteFlashcardById,
         missedFlashcards,
         missedFlashcardsById,

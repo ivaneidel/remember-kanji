@@ -17,6 +17,16 @@ const FlashcardTile = ({
 
   const flashcard = flashcards[index];
 
+  const editFlashcard = useCallback(
+    (event: any, flashcard: Flashcard) => {
+      event.preventDefault();
+      event.stopPropagation();
+
+      navigate(`/flashcards/${flashcard.id}/edit`);
+    },
+    [navigate]
+  );
+
   const deleteFlashcard = useCallback(
     (event: any, flashcard: Flashcard) => {
       event.preventDefault();
@@ -42,6 +52,7 @@ const FlashcardTile = ({
     >
       <span className="frame">{flashcard.frame || "*"}</span>
       <span className="key-word">{flashcard.keyWord.toUpperCase()}</span>
+      <button onClick={(e) => editFlashcard(e, flashcard)}>✏️</button>
       <button onClick={(e) => deleteFlashcard(e, flashcard)}>🗑️</button>
     </div>
   );
