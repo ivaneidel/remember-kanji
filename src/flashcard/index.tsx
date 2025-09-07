@@ -15,8 +15,11 @@ const Flashcards = () => {
   useEffect(() => {
     if (search.trim()) {
       setFilteredFlashcards(
-        flashcards.filter((f) =>
-          f.keyWord.toLowerCase().includes(search.trim().toLowerCase())
+        flashcards.filter(
+          (f) =>
+            f.keyWord.toLowerCase().includes(search.trim().toLowerCase()) ||
+            (f.help &&
+              f.help.toLowerCase().includes(search.trim().toLowerCase()))
         )
       );
       return;
@@ -39,7 +42,7 @@ const Flashcards = () => {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Search keyword"
+              placeholder="Search keyword or help"
             />
             <button className="clear" onClick={() => setSearch("")}>
               X
