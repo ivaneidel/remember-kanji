@@ -43,6 +43,10 @@ const FlashcardView = ({
 
       if (isLowerCase || isFirstWord || isAfterDot) return <span>{s}</span>;
 
+      const isPrimitiveUse = s.startsWith("[") || s.endsWith("]");
+
+      if (isPrimitiveUse) return <span className="primitive-use">{s}</span>;
+
       return <span className="primitive">{s}</span>;
     });
   }, [flashcard]);

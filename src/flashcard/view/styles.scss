@@ -76,6 +76,10 @@
       span {
         margin-right: 4px;
 
+        &.primitive-use {
+          font-weight: bold;
+        }
+
         &.primitive {
           color: $accent-color;
         }
