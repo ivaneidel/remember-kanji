@@ -1,16 +1,29 @@
 import AddNewFlashcardButton from "../components/add-new-flashcard-button";
 import { useFlashcards } from "./context/FlashcardContext";
-
-import "./styles.scss";
 import { List } from "react-window";
 import FlashcardTile from "./flashcard-tile";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+
+import "./styles.scss";
+import { useSearchParams } from "react-router";
 
 const Flashcards = () => {
   const { flashcards } = useFlashcards();
 
-  const [search, setSearch] = useState("");
+  const [searchParam, setSearchParam] = useSearchParams();
   const [filteredFlashcards, setFilteredFlashcards] = useState(flashcards);
+
+  const search = useMemo(() => searchParam.get("q") || "", [searchParam]);
+
+  const onSearchChange = useCallback(
+    (value: string) => {
+      setSearchParam(
+        { ...(value.trim() ? { q: value.trim() } : {}) },
+        { replace: true }
+      );
+    },
+    [setSearchParam]
+  );
 
   useEffect(() => {
     if (search.trim()) {
@@ -41,10 +54,10 @@ const Flashcards = () => {
             <input
               type="text"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => onSearchChange(e.target.value)}
               placeholder="Search keyword or help"
             />
-            <button className="clear" onClick={() => setSearch("")}>
+            <button className="clear" onClick={() => onSearchChange("")}>
               X
             </button>
           </div>
