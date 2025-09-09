@@ -49,13 +49,19 @@ export const saveAllMissedFlashcards = async (missedFlashcards: string[]) => {
 };
 
 export const exportFlashcards = async () => {
+  const date = new Date()
+    .toISOString()
+    .split(".")[0]
+    .replaceAll("-", "_")
+    .replaceAll("T", "_")
+    .replaceAll(":", "_");
   const flashcards = await getAllFlashcards();
   const serialized = JSON.stringify(flashcards);
   const blob = new Blob([serialized], { type: "application/octet-stream" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "flashcards.kanji";
+  a.download = `flashcards_[${date}].kanji`;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
