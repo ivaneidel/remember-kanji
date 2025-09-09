@@ -99,18 +99,18 @@ const ReviewFlashcards = () => {
                 key={flashcard.id}
                 extraContentFront={
                   <div className="hit-miss-buttons">
-                    <div
+                    <button
                       className="button miss"
                       onClick={(e) => onFlashcardMiss(e, flashcard.id)}
                     >
                       👎
-                    </div>
-                    <div
+                    </button>
+                    <button
                       className="button hit"
                       onClick={(e) => onFlashcardHit(e, flashcard.id)}
                     >
                       👍
-                    </div>
+                    </button>
                   </div>
                 }
               />

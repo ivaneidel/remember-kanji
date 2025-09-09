@@ -1,5 +1,6 @@
-import { JSX, useMemo, useState } from "react";
-import { useParams } from "react-router";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { JSX, useCallback, useMemo, useState } from "react";
+import { useNavigate, useParams } from "react-router";
 import { useFlashcards } from "../context/FlashcardContext";
 import { Flashcard } from "../../types";
 
@@ -10,6 +11,7 @@ interface PropTypes {
   startFlipped?: boolean;
   extraContentFront?: JSX.Element;
   extraContentBack?: JSX.Element;
+  hideMarkForReview?: boolean;
 }
 
 const FlashcardView = ({
@@ -17,9 +19,13 @@ const FlashcardView = ({
   startFlipped,
   extraContentFront,
   extraContentBack,
+  hideMarkForReview,
 }: PropTypes) => {
+  const navigate = useNavigate();
   const params = useParams();
-  const { flashcardsById } = useFlashcards();
+
+  const { flashcardsById, missedFlashcardsById, addMissedFlashcardById } =
+    useFlashcards();
 
   const [flipped, setFlipped] = useState(!!startFlipped);
 
@@ -51,6 +57,18 @@ const FlashcardView = ({
     });
   }, [flashcard]);
 
+  const onMarkForReview = useCallback(
+    (event: any, flashcardId: string) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (missedFlashcardsById[flashcardId]) return;
+
+      addMissedFlashcardById(flashcardId);
+      navigate(-1);
+    },
+    [missedFlashcardsById, addMissedFlashcardById, navigate]
+  );
+
   if (!flashcard) return null;
 
   return (
@@ -64,6 +82,17 @@ const FlashcardView = ({
         <img src={flashcard.image} />
         <span className="frame">{flashcard.frame || "*"}</span>
         {extraContentFront}
+        {!extraContentFront && !hideMarkForReview && (
+          <div className="mark-for-review">
+            <button
+              disabled={missedFlashcardsById[flashcard.id]}
+              className="button review"
+              onClick={(e) => onMarkForReview(e, flashcard.id)}
+            >
+              📖
+            </button>
+          </div>
+        )}
       </div>
       <div className="back">
         <span className="key-word">{flashcard.keyWord.toUpperCase()}</span>

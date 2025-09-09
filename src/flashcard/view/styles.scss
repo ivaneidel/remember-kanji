@@ -49,6 +49,18 @@
       bottom: 5%;
       right: 5%;
     }
+
+    .mark-for-review {
+      position: absolute;
+      bottom: 16px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .button {
+        @include icon-button;
+      }
+    }
   }
 
   .back {
