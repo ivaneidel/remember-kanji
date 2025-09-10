@@ -88,6 +88,10 @@
       span {
         margin-right: 4px;
 
+        &.is-keyword {
+          text-decoration: underline;
+        }
+
         &.primitive-use {
           font-weight: bold;
         }

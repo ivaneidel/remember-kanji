@@ -43,9 +43,15 @@ const FlashcardView = ({
     const chunks = flashcard.help.trim().split(" ");
 
     return chunks.map((s, index) => {
+      const isKeyWord =
+        s.toLowerCase().replace(/[^a-z]/gi, "") ===
+        flashcard.keyWord.toLowerCase();
+
       const isLowerCase = s.toLowerCase() === s;
       const isFirstWord = index === 0;
       const isAfterDot = chunks[index - 1] && chunks[index - 1].endsWith(".");
+
+      if (isKeyWord) return <span className="is-keyword">{s}</span>;
 
       if (isLowerCase || isFirstWord || isAfterDot) return <span>{s}</span>;
 
