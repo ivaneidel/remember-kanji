@@ -1,23 +1,17 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Flashcard } from "../../types";
 import { useFlashcards } from "../../flashcard/context/FlashcardContext";
 import { shuffle } from "lodash";
 import FlashcardView from "../../flashcard/view";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
+import GradeFlashcardReview from "../../components/grade-flashcard-review";
 
 import "./styles.scss";
 
 const ReviewFlashcards = () => {
-  const params = useParams();
   const navigate = useNavigate();
 
-  const {
-    flashcards,
-    missedFlashcardsById,
-    addMissedFlashcardById,
-    deleteMissedFlashcardById,
-  } = useFlashcards();
+  const { flashcards, flashcardsMetadataById } = useFlashcards();
 
   const [flashcardsToReview, setFlashcardsToReview] = useState<Flashcard[]>([]);
   const [active, setActive] = useState(0);
@@ -46,41 +40,24 @@ const ReviewFlashcards = () => {
     setReachEnd(true);
   }, [active, setActive, flashcardsToReview, setReachEnd]);
 
-  const onFlashcardMiss = useCallback(
-    (event: any, flashcardId: string) => {
-      event.preventDefault();
-      event.stopPropagation();
-      addMissedFlashcardById(flashcardId);
-      onForward();
-    },
-    [addMissedFlashcardById, onForward]
-  );
-
-  const onFlashcardHit = useCallback(
-    (event: any, flashcardId: string) => {
-      event.preventDefault();
-      event.stopPropagation();
-      deleteMissedFlashcardById(flashcardId);
-      onForward();
-    },
-    [deleteMissedFlashcardById, onForward]
-  );
-
   useEffect(() => {
-    const shuffled = shuffle(flashcards);
-    if (params.reviewSize) {
-      if (params.reviewSize === "onlyMissed") {
-        setFlashcardsToReview(
-          flashcards.filter((f) => !!missedFlashcardsById[f.id])
-        );
-      } else {
-        setFlashcardsToReview(shuffled.slice(0, Number(params.reviewSize)));
-      }
-    } else {
-      setFlashcardsToReview(shuffled);
+    const shuffled = shuffle(
+      flashcards.filter(
+        (f) =>
+          flashcardsMetadataById[f.id] &&
+          flashcardsMetadataById[f.id].due <= Date.now()
+      )
+    );
+    setFlashcardsToReview(shuffled);
+    if (shuffled.length === 0) {
+      setReachEnd(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  Object.values(flashcardsMetadataById).forEach((m) =>
+    console.log(new Date(m.due))
+  );
 
   return (
     <div className="review">
@@ -98,20 +75,10 @@ const ReviewFlashcards = () => {
                 paramFlashcard={flashcard}
                 key={flashcard.id}
                 extraContentFront={
-                  <div className="hit-miss-buttons">
-                    <button
-                      className="button miss"
-                      onClick={(e) => onFlashcardMiss(e, flashcard.id)}
-                    >
-                      👎
-                    </button>
-                    <button
-                      className="button hit"
-                      onClick={(e) => onFlashcardHit(e, flashcard.id)}
-                    >
-                      👍
-                    </button>
-                  </div>
+                  <GradeFlashcardReview
+                    metadata={flashcardsMetadataById[flashcard.id]}
+                    postGradeAction={() => onForward()}
+                  />
                 }
               />
             );

@@ -6,3 +6,11 @@ export type Flashcard = {
   image: string;
   primitive: boolean;
 };
+
+export type FlashcardMetadata = {
+  id: string;
+  lastReviewed: number;
+  interval: number;
+  ease: number;
+  due: number;
+};

@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { JSX, useCallback, useMemo, useState } from "react";
+import { JSX, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
 import { useFlashcards } from "../context/FlashcardContext";
 import { Flashcard } from "../../types";
 
 import "./styles.scss";
+import GradeFlashcardReview from "../../components/grade-flashcard-review";
 
 interface PropTypes {
   paramFlashcard?: Flashcard;
@@ -24,8 +24,7 @@ const FlashcardView = ({
   const navigate = useNavigate();
   const params = useParams();
 
-  const { flashcardsById, missedFlashcardsById, addMissedFlashcardById } =
-    useFlashcards();
+  const { flashcardsById, flashcardsMetadataById } = useFlashcards();
 
   const [flipped, setFlipped] = useState(!!startFlipped);
 
@@ -63,18 +62,6 @@ const FlashcardView = ({
     });
   }, [flashcard]);
 
-  const onMarkForReview = useCallback(
-    (event: any, flashcardId: string) => {
-      event.preventDefault();
-      event.stopPropagation();
-      if (missedFlashcardsById[flashcardId]) return;
-
-      addMissedFlashcardById(flashcardId);
-      navigate(-1);
-    },
-    [missedFlashcardsById, addMissedFlashcardById, navigate]
-  );
-
   if (!flashcard) return null;
 
   return (
@@ -88,17 +75,14 @@ const FlashcardView = ({
         <img src={flashcard.image} />
         <span className="frame">{flashcard.frame || "*"}</span>
         {extraContentFront}
-        {!extraContentFront && !hideMarkForReview && (
-          <div className="mark-for-review">
-            <button
-              disabled={missedFlashcardsById[flashcard.id]}
-              className="button review"
-              onClick={(e) => onMarkForReview(e, flashcard.id)}
-            >
-              📖
-            </button>
-          </div>
-        )}
+        {!extraContentFront &&
+          !hideMarkForReview &&
+          flashcardsMetadataById[flashcard.id] && (
+            <GradeFlashcardReview
+              metadata={flashcardsMetadataById[flashcard.id]}
+              postGradeAction={() => navigate(-1)}
+            />
+          )}
       </div>
       <div className="back">
         <span className="key-word">{flashcard.keyWord.toUpperCase()}</span>

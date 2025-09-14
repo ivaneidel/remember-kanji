@@ -18,7 +18,7 @@ const Home = () => {
       </div>
       <div
         className="link review-flashcards"
-        onClick={() => (flashcards.length ? navigate("/review") : null)}
+        onClick={() => (flashcards.length ? navigate("/review-srs") : null)}
       >
         <span>REVIEW FLASHCARDS</span>
       </div>
