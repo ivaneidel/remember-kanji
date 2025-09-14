@@ -8,7 +8,6 @@ import Flashcards from "./flashcard/index.tsx";
 import NewFlashcard from "./flashcard/new/index.tsx";
 import { FlashcardProvider } from "./flashcard/context/FlashcardContext.tsx";
 import FlashcardView from "./flashcard/view/index.tsx";
-import ConfigReview from "./review/config/index.tsx";
 import Settings from "./settings/index.tsx";
 import ReviewFlashcards from "./review/actual-review/index.tsx";
 import EditFlashcard from "./flashcard/edit/index.tsx";
@@ -27,11 +26,8 @@ createRoot(document.getElementById("root")!).render(
             <Route path=":flashcardId" element={<FlashcardView />} />
             <Route path=":flashcardId/edit" element={<EditFlashcard />} />
           </Route>
-          <Route path="review">
-            <Route index element={<ConfigReview />} />
-            <Route path=":reviewSize" element={<ReviewFlashcards />} />
-          </Route>
-          <Route path="/settings" element={<Settings />} />
+          <Route path="review-srs" element={<ReviewFlashcards />} />
+          <Route path="settings" element={<Settings />} />
         </Routes>
       </HashRouter>
     </FlashcardProvider>

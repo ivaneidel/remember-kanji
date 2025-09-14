@@ -1,19 +1,19 @@
 import { openDB } from "idb";
-import { Flashcard } from "../types";
+import { Flashcard, FlashcardMetadata } from "../types";
 
 const DB_NAME = "remember_kanji";
 const STORE_NAME = "flashcards";
-const MISSED_STORE_NAME = "missed_flashcards";
+const METADATA_STORE_NAME = "flashcards_metadata";
 
 const getDB = () =>
-  openDB(DB_NAME, 2, {
+  openDB(DB_NAME, 3, {
     upgrade(db) {
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME, { keyPath: "id" });
       }
 
-      if (!db.objectStoreNames.contains(MISSED_STORE_NAME)) {
-        db.createObjectStore(MISSED_STORE_NAME);
+      if (!db.objectStoreNames.contains(METADATA_STORE_NAME)) {
+        db.createObjectStore(METADATA_STORE_NAME, { keyPath: "id" });
       }
     },
   });
@@ -23,9 +23,9 @@ export const getAllFlashcards = async () => {
   return (await db.getAll(STORE_NAME)) as Flashcard[];
 };
 
-export const getAllMissedFlashcards = async () => {
+export const getAllFlashcardsMetadata = async () => {
   const db = await getDB();
-  return (await db.getAllKeys(MISSED_STORE_NAME)) as string[];
+  return (await db.getAll(METADATA_STORE_NAME)) as FlashcardMetadata[];
 };
 
 export const saveAllFlashcards = async (flashcards: Flashcard[]) => {
@@ -38,12 +38,14 @@ export const saveAllFlashcards = async (flashcards: Flashcard[]) => {
   await tx.done;
 };
 
-export const saveAllMissedFlashcards = async (missedFlashcards: string[]) => {
+export const saveAllFlashcardsMetadata = async (
+  flashcardsMetadata: FlashcardMetadata[]
+) => {
   const db = await getDB();
-  const tx = db.transaction(MISSED_STORE_NAME, "readwrite");
-  await tx.objectStore(MISSED_STORE_NAME).clear();
-  for (const missedFlashcard of missedFlashcards) {
-    await tx.objectStore(MISSED_STORE_NAME).put(true, missedFlashcard);
+  const tx = db.transaction(METADATA_STORE_NAME, "readwrite");
+  await tx.objectStore(METADATA_STORE_NAME).clear();
+  for (const metadata of flashcardsMetadata) {
+    await tx.objectStore(METADATA_STORE_NAME).put(metadata);
   }
   await tx.done;
 };
