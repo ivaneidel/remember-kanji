@@ -26,7 +26,7 @@ const Home = () => {
           className="link all-flashcards"
           onClick={() => (flashcards.length ? navigate("/flashcards") : null)}
         >
-          <span>🗂️ FLASHCARDS</span>
+          <span>🔖 FLASHCARDS</span>
         </div>
         <div
           className="link review-flashcards"

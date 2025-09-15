@@ -1,30 +1,28 @@
+import classNames from "classnames";
 import { JSX, useMemo } from "react";
 import { useDailyStats } from "../../context/StatsContext";
-import { getTodayStats } from "../../utils/stats";
+import { dateComponentsToIdString } from "../../utils/date";
 
 import "./styles.scss";
-import classNames from "classnames";
 
 const CalendarSection = () => {
   const { dailyStatsByDate } = useDailyStats();
 
   const calendarView = useMemo(() => {
     const now = new Date();
-    const daysInMonth = new Date(
-      now.getFullYear(),
-      now.getMonth() + 1,
-      0
-    ).getDate();
+    const year = now.getFullYear();
+    const month = now.getMonth() + 1;
+    const daysInMonth = new Date(year, month, 0).getDate();
 
     const days: JSX.Element[] = [];
 
-    const stats = getTodayStats(dailyStatsByDate);
-
     for (let i = 0; i < daysInMonth; i++) {
+      const dayId = dateComponentsToIdString(year, month, i + 1);
+      const stats = dailyStatsByDate[dayId];
+      const gold = stats && stats.reviewed && stats.newFlashcardsAdded;
+      const green = stats && !stats.reviewed && stats.newFlashcardsAdded;
+      const blue = stats && stats.reviewed && !stats.newFlashcardsAdded;
       const today = now.getDate() === i + 1;
-      const gold = today && stats.reviewed && stats.newFlashcardsAdded;
-      const green = today && !stats.reviewed && stats.newFlashcardsAdded;
-      const blue = today && stats.reviewed && !stats.newFlashcardsAdded;
       days.push(
         <div
           key={`day-${i + 1}`}
