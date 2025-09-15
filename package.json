@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "classnames": "^2.5.1",
     "idb": "^8.0.3",
     "lodash": "^4.17.21",
     "react": "^19.1.1",

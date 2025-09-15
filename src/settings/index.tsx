@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from "react";
 import "./styles.scss";
 import { exportFlashcards, importFlashcards } from "../utils/flashcards";
-import { useFlashcards } from "../flashcard/context/FlashcardContext";
+import { useFlashcards } from "../context/FlashcardContext";
 import { Flashcard } from "../types";
 import { v4 } from "uuid";
 

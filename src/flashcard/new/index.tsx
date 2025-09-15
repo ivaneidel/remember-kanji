@@ -3,14 +3,17 @@ import FlashcardCanvas from "./canvas";
 
 import { Flashcard } from "../../types";
 import { useNavigate } from "react-router";
-import { useFlashcards } from "../context/FlashcardContext";
+import { useFlashcards } from "../../context/FlashcardContext";
 import { v4 as uuid } from "uuid";
 
 import "./styles.scss";
+import { StatsActionType, updateTodayStats } from "../../utils/stats";
+import { useDailyStats } from "../../context/StatsContext";
 
 const NewFlashcard = () => {
   const navigate = useNavigate();
-  const { flashcards, setFlashcards } = useFlashcards();
+  const { addFlashcard } = useFlashcards();
+  const { dailyStatsByDate, addDailyStats, increaseStreak } = useDailyStats();
 
   const [image, setImage] = useState<string>();
   const [frame, setFrame] = useState("");
@@ -32,10 +35,15 @@ const NewFlashcard = () => {
       primitive,
     };
 
-    const newFlashcards = [...flashcards];
-    newFlashcards.push(newFlashcard);
+    addFlashcard(newFlashcard);
 
-    setFlashcards(newFlashcards);
+    const stats = updateTodayStats(dailyStatsByDate, {
+      type: StatsActionType.Add,
+    });
+
+    addDailyStats(stats);
+
+    increaseStreak();
 
     navigate(-1);
   }, [
@@ -45,8 +53,10 @@ const NewFlashcard = () => {
     help,
     primitive,
     navigate,
-    flashcards,
-    setFlashcards,
+    addFlashcard,
+    dailyStatsByDate,
+    addDailyStats,
+    increaseStreak,
   ]);
 
   return (

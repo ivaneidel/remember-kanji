@@ -7,28 +7,55 @@
   justify-content: center;
   flex-direction: column;
   height: 100%;
-  padding: 16px;
-  .link {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 20vh;
-    border-radius: 8px;
-    cursor: pointer;
-    width: 100%;
-    padding: 16px;
-    color: $accent-color;
-    border: 1px solid color.adjust($primary-color, $alpha: -0.3);
 
-    &:nth-child(1) {
-      margin-bottom: 16px;
-    }
-  }
   .settings-button {
     position: fixed;
     top: 8px;
     right: 8px;
     @include icon-button;
+  }
+
+  .home-content {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+
+    .streak-section {
+      margin-bottom: 32px;
+    }
+
+    .stats-section {
+      margin-bottom: 32px;
+    }
+  }
+
+  .bottom-navigation {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 68px;
+    border-top: 1px solid color.adjust($primary-color, $alpha: -0.3);
+    .link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+      padding: 16px;
+      color: $accent-color;
+
+      &:nth-child(1) {
+        border-right: 1px solid color.adjust($primary-color, $alpha: -0.3);
+      }
+    }
+  }
+
+  .add-flashcard-button {
+    margin-bottom: 68px;
   }
 }

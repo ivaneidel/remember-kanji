@@ -2,7 +2,7 @@
 import { RowComponentProps } from "react-window";
 import { Flashcard } from "../types";
 import { useNavigate } from "react-router";
-import { useFlashcards } from "./context/FlashcardContext";
+import { useFlashcards } from "../context/FlashcardContext";
 import { useCallback } from "react";
 
 const FlashcardTile = ({

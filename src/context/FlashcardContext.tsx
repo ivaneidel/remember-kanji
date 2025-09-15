@@ -8,14 +8,14 @@ import {
   useEffect,
   useCallback,
 } from "react";
-import { Flashcard, FlashcardMetadata } from "../../types";
+import { Flashcard, FlashcardMetadata } from "../types";
 import {
   getAllFlashcards,
   getAllFlashcardsMetadata,
   saveAllFlashcards,
   saveAllFlashcardsMetadata,
-} from "../../utils/flashcards";
-import { getDefaultMetadata } from "../../utils/srs";
+} from "../utils/db";
+import { getDefaultMetadata } from "../utils/srs";
 
 type FlashcardsById = {
   [id: string]: Flashcard;
@@ -25,7 +25,7 @@ type FlashcardsMetadataById = {
   [id: string]: FlashcardMetadata;
 };
 
-type FlashcardContextType = {
+type ContextType = {
   flashcards: Flashcard[];
   flashcardsById: FlashcardsById;
   setFlashcards: (value: Flashcard[]) => void;
@@ -38,7 +38,7 @@ type FlashcardContextType = {
   deleteFlashcardMetadataById: (id: string) => void;
 };
 
-const FlashcardContext = createContext<FlashcardContextType | undefined>(
+const FlashcardContext = createContext<ContextType | undefined>(
   undefined
 );
 
