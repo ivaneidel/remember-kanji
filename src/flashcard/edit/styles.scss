@@ -26,8 +26,23 @@
     }
   }
 
-  img {
+  .image-container {
+    position: relative;
     width: 50%;
+
+    img {
+      width: 100%;
+    }
+
+    button {
+      position: absolute;
+      right: 0;
+      top: 24px;
+      border: none;
+      background-color: transparent;
+      width: 48px;
+      height: 48px;
+    }
   }
 
   .save-button {

@@ -4,6 +4,7 @@ import "./styles.scss";
 
 type PropTypes = {
   setImage: (image: string | undefined) => void;
+  onCancel?: () => void;
 };
 
 const MAX_WIDTH = 15;
@@ -12,7 +13,7 @@ const STROKE_FADE_STEPS = 10; // Number of segments to fade from thick to thin
 
 let _dirty = false;
 
-const FlashcardCanvas = ({ setImage }: PropTypes) => {
+const FlashcardCanvas = ({ setImage, onCancel }: PropTypes) => {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const drawing = useRef(false);
   const lastPoint = useRef<{ x: number; y: number } | null>(null);
@@ -158,6 +159,11 @@ const FlashcardCanvas = ({ setImage }: PropTypes) => {
         }}
       ></canvas>
       <div className="buttons-section">
+        {onCancel && (
+          <button className="button cancel-button" onClick={onCancel}>
+            ❌
+          </button>
+        )}
         <button className="button clear-button" onClick={resetCanvas}>
           🗑️
         </button>
