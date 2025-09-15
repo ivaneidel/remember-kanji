@@ -1,12 +1,16 @@
 import classNames from "classnames";
-import { JSX, useMemo } from "react";
+import { JSX, useMemo, useState } from "react";
 import { useDailyStats } from "../../context/StatsContext";
 import { dateComponentsToIdString } from "../../utils/date";
 
 import "./styles.scss";
+import { DailyStats } from "../../types";
+import ClickOutside from "../../components/click-outside";
 
 const CalendarSection = () => {
   const { dailyStatsByDate } = useDailyStats();
+
+  const [selectedStats, setSelectedStats] = useState<DailyStats>();
 
   const calendarView = useMemo(() => {
     const now = new Date();
@@ -32,6 +36,13 @@ const CalendarSection = () => {
             green,
             blue,
           })}
+          onClick={(e) => {
+            if (stats) {
+              e.preventDefault();
+              e.stopPropagation();
+              setSelectedStats(stats);
+            }
+          }}
         >
           {i + 1}
         </div>
@@ -41,7 +52,21 @@ const CalendarSection = () => {
     return <>{days}</>;
   }, [dailyStatsByDate]);
 
-  return <div className="calendar-view">{calendarView}</div>;
+  return (
+    <div className="calendar-view">
+      <div className="days">{calendarView}</div>
+      {selectedStats && (
+        <ClickOutside onClickOutside={() => setSelectedStats(undefined)}>
+          <div className="past-session-tooltip">
+            <span>{selectedStats.date}</span>
+            <span>Added: {selectedStats.newFlashcardsAdded}</span>
+            <span>Reviewed: {selectedStats.reviewed}</span>
+            <span>XP: {selectedStats.xp}</span>
+          </div>
+        </ClickOutside>
+      )}
+    </div>
+  );
 };
 
 export default CalendarSection;
