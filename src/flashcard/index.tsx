@@ -1,5 +1,5 @@
 import AddNewFlashcardButton from "../components/add-new-flashcard-button";
-import { useFlashcards } from "./context/FlashcardContext";
+import { useFlashcards } from "../context/FlashcardContext";
 import { List } from "react-window";
 import FlashcardTile from "./flashcard-tile";
 import { useCallback, useEffect, useMemo, useState } from "react";

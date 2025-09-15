@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 
 import { Flashcard } from "../../types";
 import { useNavigate, useParams } from "react-router";
-import { useFlashcards } from "../context/FlashcardContext";
+import { useFlashcards } from "../../context/FlashcardContext";
 
 import "./styles.scss";
 

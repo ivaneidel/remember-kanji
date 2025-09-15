@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Flashcard } from "../../types";
-import { useFlashcards } from "../../flashcard/context/FlashcardContext";
+import { useFlashcards } from "../../context/FlashcardContext";
 import { shuffle } from "lodash";
 import FlashcardView from "../../flashcard/view";
 import { useNavigate } from "react-router";
@@ -48,16 +48,13 @@ const ReviewFlashcards = () => {
           flashcardsMetadataById[f.id].due <= Date.now()
       )
     );
+
     setFlashcardsToReview(shuffled);
     if (shuffled.length === 0) {
       setReachEnd(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  Object.values(flashcardsMetadataById).forEach((m) =>
-    console.log(new Date(m.due))
-  );
 
   return (
     <div className="review">

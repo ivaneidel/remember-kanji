@@ -1,6 +1,7 @@
 import { FlashcardMetadata } from "../types";
+import { GradeType } from "./stats";
 
-export function getDefaultMetadata(id: string): FlashcardMetadata {
+export const getDefaultMetadata = (id: string): FlashcardMetadata => {
   return {
     id,
     lastReviewed: 0,
@@ -8,7 +9,7 @@ export function getDefaultMetadata(id: string): FlashcardMetadata {
     ease: 2.5,
     due: Date.now(), // or 0 if you want to delay first review
   };
-}
+};
 
 /**
  * Updates FlashcardMetadata using the SM-2 algorithm.
@@ -16,10 +17,10 @@ export function getDefaultMetadata(id: string): FlashcardMetadata {
  * @param grade 0 = Again, 1 = Hard, 2 = Good, 3 = Easy.
  * @returns Updated FlashcardMetadata.
  */
-export function updateSRS(
+export const updateSRS = (
   metadata: FlashcardMetadata,
-  grade: 0 | 1 | 2 | 3
-): FlashcardMetadata {
+  grade: GradeType
+): FlashcardMetadata => {
   const now = Date.now();
   let { interval, ease } = metadata;
 
@@ -28,17 +29,17 @@ export function updateSRS(
 
   // First review
   if (interval === 0) {
-    if (grade === 3) interval = 4;
-    else if (grade === 2) interval = 1;
+    if (grade === GradeType.Hit) interval = 4;
+    else if (grade === GradeType.Easy) interval = 1;
     else interval = 0.5; // Try again soon
   } else {
-    if (grade === 3) {
+    if (grade === GradeType.Hit) {
       interval = interval * ease;
       ease += 0.15;
-    } else if (grade === 2) {
+    } else if (grade === GradeType.Easy) {
       interval = interval * (ease - 0.15);
       // ease unchanged
-    } else if (grade === 1) {
+    } else if (grade === GradeType.Hard) {
       interval = Math.max(1, interval * 0.5);
       ease -= 0.2;
     } else {
@@ -61,4 +62,4 @@ export function updateSRS(
     ease,
     due: now + interval * 24 * 60 * 60 * 1000, // interval in days
   };
-}
+};

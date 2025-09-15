@@ -1,0 +1,9 @@
+@use "/src/styles/global" as *;
+
+.streak-section {
+  span {
+    color: $accent-color;
+    font-size: 48px;
+    font-weight: bold;
+  }
+}

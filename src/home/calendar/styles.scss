@@ -1,0 +1,34 @@
+@use "/src/styles/global" as *;
+
+.calendar-view {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 95%;
+
+  .day {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7);
+    height: 48px;
+    border: 0.1px solid #ccc;
+
+    &.today {
+      border: 0.1px solid #000;
+    }
+
+    &.gold {
+      background-color: #ffe96a;
+    }
+
+    &.green {
+      background-color: #3b8f3b;
+    }
+
+    &.blue {
+      background-color: #6f6ffb;
+    }
+  }
+}

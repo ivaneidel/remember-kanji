@@ -14,3 +14,19 @@ export type FlashcardMetadata = {
   ease: number;
   due: number;
 };
+
+export type DailyStats = {
+  date: string; // YYYY-MM-DD
+  newFlashcardsAdded: number;
+  reviewed: number;
+  hit: number;
+  miss: number;
+  easy: number;
+  hard: number;
+  xp: number;
+};
+
+export type Streak = {
+  days: number;
+  lastActiveName: string; // YYYY-MM-DD
+};

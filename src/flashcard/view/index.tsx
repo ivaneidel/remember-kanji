@@ -1,10 +1,10 @@
 import { JSX, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import { useFlashcards } from "../context/FlashcardContext";
+import { useFlashcards } from "../../context/FlashcardContext";
 import { Flashcard } from "../../types";
+import GradeFlashcardReview from "../../components/grade-flashcard-review";
 
 import "./styles.scss";
-import GradeFlashcardReview from "../../components/grade-flashcard-review";
 
 interface PropTypes {
   paramFlashcard?: Flashcard;
