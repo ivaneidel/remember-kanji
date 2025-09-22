@@ -48,7 +48,10 @@
 
       img {
         width: 100%;
-        mix-blend-mode: multiply;
+        @media (prefers-color-scheme: dark) {
+          filter: invert(1);
+          mix-blend-mode: lighten;
+        }
       }
     }
 

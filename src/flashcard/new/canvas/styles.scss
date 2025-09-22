@@ -8,6 +8,13 @@
   width: 100vw;
   height: 100vh;
 
+  canvas {
+    @media (prefers-color-scheme: dark) {
+      filter: invert(1);
+      mix-blend-mode: lighten;
+    }
+  }
+
   .crosshairs {
     position: absolute;
     display: flex;

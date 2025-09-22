@@ -32,7 +32,10 @@
 
   img {
     width: 50%;
-    mix-blend-mode: multiply;
+    @media (prefers-color-scheme: dark) {
+      filter: invert(1);
+      mix-blend-mode: lighten;
+    }
   }
 
   .save-button {
