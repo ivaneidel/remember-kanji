@@ -6,6 +6,8 @@ import GradeFlashcardReview from "../../components/grade-flashcard-review";
 
 import "./styles.scss";
 
+const toCleanChunk = (s: string) => s.toLowerCase().replace(/[^a-z-]/gi, "");
+
 interface PropTypes {
   paramFlashcard?: Flashcard;
   startFlipped?: boolean;
@@ -41,10 +43,23 @@ const FlashcardView = ({
 
     const chunks = flashcard.help.trim().split(" ");
 
+    const keyChunks = flashcard.keyWord.toLowerCase().trim().split(" ");
+
+    let keyChunkCount = 0;
+
     return chunks.map((s, index) => {
-      const isKeyWord =
-        s.toLowerCase().replace(/[^a-z]/gi, "") ===
-        flashcard.keyWord.toLowerCase();
+      let isKeyWord = false;
+
+      if (keyChunkCount === 0 && keyChunks.length > 1) {
+        isKeyWord = keyChunks.every(
+          (kCh, kI) =>
+            chunks[index + kI] && kCh === toCleanChunk(chunks[index + kI])
+        );
+      } else {
+        isKeyWord = keyChunks[keyChunkCount] === toCleanChunk(s);
+      }
+
+      keyChunkCount = isKeyWord ? keyChunkCount + 1 : 0;
 
       const isLowerCase = s.toLowerCase() === s;
       const isFirstWord = index === 0;
