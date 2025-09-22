@@ -12,7 +12,7 @@ const AddNewFlashcardButton = () => {
 
   return (
     <button className="add-flashcard-button" onClick={onButtonClick}>
-      ➕
+      +
     </button>
   );
 };

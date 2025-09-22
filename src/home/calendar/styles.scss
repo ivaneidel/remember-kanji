@@ -23,19 +23,19 @@
       border: 0.1px solid #ccc;
 
       &.today {
-        box-shadow: inset 0 0 3px 0 #000;
+        box-shadow: inset 0 0 3px 0 light-dark(#000, #999);
       }
 
       &.gold {
-        background-color: #ffe96a;
+        background-color: light-dark(#ffe96a, #c3b151);
       }
 
       &.green {
-        background-color: #57ba57;
+        background-color: light-dark(#57ba57, #397a39);
       }
 
       &.blue {
-        background-color: #6f6ffb;
+        background-color: light-dark(#6f6ffb, #4f4fb6);
       }
     }
   }
@@ -52,7 +52,7 @@
     width: 70%;
     left: 15%;
     padding: 8px;
-    background-color: white;
+    background-color: light-dark(white, #383838);
     border-radius: 4px;
     box-shadow: 0 0 3px 0 #ccc;
 

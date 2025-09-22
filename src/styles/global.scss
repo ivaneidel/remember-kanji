@@ -1,3 +1,4 @@
+$dark-background: #383838;
 $primary-color: #cdc6d7;
 $accent-color: #986ad8;
 $secondary-color: #65468f;
@@ -9,7 +10,7 @@ $secondary-color: #65468f;
   height: 48px;
   min-height: 48px;
   cursor: pointer;
-  background-color: $primary-color;
+  background-color: light-dark($primary-color, $secondary-color);
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -20,9 +21,9 @@ $secondary-color: #65468f;
   border: none;
   padding: 16px;
   cursor: pointer;
-  background-color: $primary-color;
+  background-color: light-dark($primary-color, $secondary-color);
   border-radius: 4px;
-  color: $secondary-color;
+  color: light-dark($secondary-color, $primary-color);
   font-weight: bold;
   font-size: 16px;
 

@@ -87,7 +87,9 @@ const FlashcardView = ({
       onClick={() => setFlipped(!flipped)}
     >
       <div className="front">
-        <img src={flashcard.image} />
+        <div className="img-container">
+          <img src={flashcard.image} />
+        </div>
         <span className="frame">{flashcard.frame || "*"}</span>
         {extraContentFront}
         {!extraContentFront &&
