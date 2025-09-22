@@ -3,7 +3,7 @@
   "short_name": "Remember Kanji",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#fff",
+  "background_color": "#cdc6d7",
   "theme_color": "#cdc6d7",
   "description": "A web-based app to help you remember Kanji.",
   "icons": [
