@@ -10,9 +10,9 @@ import classNames from "classnames";
 import { defaultFlashcardSort } from "../utils/flashcards";
 
 enum SortType {
-  ByFrameDesc,
-  ByFrameAsc,
-  ByDueAsc,
+  ByFrameDesc = "by-frame-desc",
+  ByFrameAsc = "by-frame-asc",
+  ByDueAsc = "by-due-asc",
 }
 
 const Flashcards = () => {
@@ -21,27 +21,34 @@ const Flashcards = () => {
   const [searchParam, setSearchParam] = useSearchParams();
   const [filteredFlashcards, setFilteredFlashcards] = useState(flashcards);
   const [sortMenuVisible, setSortMenuVisible] = useState(false);
-  const [sortType, setSortType] = useState(SortType.ByFrameAsc);
 
   const search = useMemo(() => searchParam.get("q") || "", [searchParam]);
+  const sortType = useMemo(() => searchParam.get("s") || "", [searchParam]);
 
   const onSearchChange = useCallback(
     (value: string) => {
-      setSearchParam(
-        { ...(value.trim() ? { q: value.trim() } : {}) },
-        { replace: true }
-      );
+      setSearchParam({ s: sortType, q: value.trim() }, { replace: true });
     },
-    [setSearchParam]
+    [sortType, setSearchParam]
   );
 
-  const onSetSortType = useCallback((type: SortType) => {
-    setSortType(type);
-    setSortMenuVisible(false);
-  }, []);
+  const onSetSortType = useCallback(
+    (type: SortType) => {
+      setSearchParam({ q: search, s: type }, { replace: true });
+      setSortMenuVisible(false);
+    },
+    [search, setSearchParam]
+  );
 
   useEffect(() => {
-    const clone = [...flashcards];
+    const clone = search
+      ? flashcards.filter(
+          (f) =>
+            f.keyWord.toLowerCase().includes(search.trim().toLowerCase()) ||
+            (f.help &&
+              f.help.toLowerCase().includes(search.trim().toLowerCase()))
+        )
+      : [...flashcards];
 
     if (sortType === SortType.ByFrameAsc) {
       defaultFlashcardSort(clone);
@@ -69,23 +76,7 @@ const Flashcards = () => {
     }
 
     setFilteredFlashcards(clone);
-  }, [sortType, flashcards, flashcardsMetadataById]);
-
-  useEffect(() => {
-    if (search.trim()) {
-      setFilteredFlashcards(
-        flashcards.filter(
-          (f) =>
-            f.keyWord.toLowerCase().includes(search.trim().toLowerCase()) ||
-            (f.help &&
-              f.help.toLowerCase().includes(search.trim().toLowerCase()))
-        )
-      );
-      return;
-    }
-
-    setFilteredFlashcards(flashcards);
-  }, [search, flashcards]);
+  }, [search, sortType, flashcards, flashcardsMetadataById]);
 
   return (
     <div className="flashcard-list">
