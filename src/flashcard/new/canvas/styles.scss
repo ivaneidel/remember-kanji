@@ -23,7 +23,7 @@
       content: "";
       display: block;
       position: absolute;
-      background-color: #ccc;
+      background-color: light-dark(#ccc, #888);
       opacity: 0.2;
       width: 2px;
       height: 100%;
@@ -33,7 +33,7 @@
       content: "";
       display: block;
       position: absolute;
-      background-color: #ccc;
+      background-color: light-dark(#ccc, #888);
       opacity: 0.2;
       height: 2px;
       width: 100%;
@@ -52,12 +52,7 @@
     flex-direction: column;
 
     .button {
-      border: none;
-      width: 48px;
-      height: 48px;
-      cursor: pointer;
-      background-color: $primary-color;
-      border-radius: 4px;
+      @include icon-button;
       margin-bottom: 8px;
     }
   }

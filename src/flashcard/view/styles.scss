@@ -28,9 +28,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: white;
+    background: light-dark(white, #383838);
     border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 24px light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.3));
     font-size: 20px;
     transition: transform 0.8s cubic-bezier(0.4, 2, 0.6, 1);
   }
@@ -38,10 +38,17 @@
   .front {
     z-index: 2;
     transform: rotateY(0deg);
-    overflow: hidden;
+    max-height: 100%;
 
-    img {
+    .img-container {
+      overflow: hidden;
+      height: 100%;
       width: 80%;
+
+      img {
+        width: 100%;
+        mix-blend-mode: multiply;
+      }
     }
 
     .frame {
