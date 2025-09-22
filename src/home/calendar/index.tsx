@@ -44,7 +44,7 @@ const CalendarSection = () => {
             }
           }}
         >
-          {i + 1}
+          <span>{i + 1}</span>
         </div>
       );
     }
