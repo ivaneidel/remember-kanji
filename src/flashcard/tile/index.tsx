@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { RowComponentProps } from "react-window";
-import { Flashcard } from "../types";
+import { Flashcard } from "../../types";
 import { useNavigate } from "react-router";
-import { useFlashcards } from "../context/FlashcardContext";
-import { useCallback } from "react";
+import { useFlashcards } from "../../context/FlashcardContext";
+import { useCallback, useMemo } from "react";
+import { getDueProximity } from "../../utils/review";
+import classNames from "classnames";
+
+import "./styles.scss";
 
 const FlashcardTile = ({
   index,
@@ -13,9 +17,19 @@ const FlashcardTile = ({
   flashcards: Flashcard[];
 }>) => {
   const navigate = useNavigate();
-  const { deleteFlashcardById } = useFlashcards();
+  const { deleteFlashcardById, flashcardsMetadataById } = useFlashcards();
 
   const flashcard = flashcards[index];
+
+  const metadata = useMemo(
+    () => (flashcard?.id ? flashcardsMetadataById[flashcard.id] : undefined),
+    [flashcard, flashcardsMetadataById]
+  );
+
+  const dueProximity = useMemo(
+    () => getDueProximity(metadata?.due || 0),
+    [metadata]
+  );
 
   const editFlashcard = useCallback(
     (event: any, flashcard: Flashcard) => {
@@ -44,7 +58,9 @@ const FlashcardTile = ({
   return (
     <div
       style={style}
-      className={`flashcard-tile ${flashcard.primitive ? "primitive" : ""}`}
+      className={classNames("flashcard-tile", `due-${dueProximity}`, {
+        primitive: flashcard.primitive,
+      })}
       key={flashcard.id}
       onClick={() => {
         navigate(`/flashcards/${flashcard.id}`);

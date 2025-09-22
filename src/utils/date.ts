@@ -1,3 +1,10 @@
+const SECOND = 1000;
+
+export const seconds = (q: number) => q * SECOND;
+export const minutes = (q: number) => q * seconds(60);
+export const hours = (q: number) => q * minutes(60);
+export const days = (q: number) => q * hours(24);
+
 // Helper to get today's date string in YYYY-MM-DD format
 export const dateToIdString = (date: Date): string => {
   // Get local date components

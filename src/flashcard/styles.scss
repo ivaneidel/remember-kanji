@@ -16,82 +16,94 @@
   width: 100%;
   padding-bottom: 60px;
 
-  .flashcard-search {
+  .search-sort {
     position: sticky;
     top: 0;
     left: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 16px;
     width: 100%;
+    box-shadow: 0 0 0 0.1px #ccc;
     background-color: white;
     z-index: 2;
-    box-shadow: 0 0 0 0.1px #ccc;
+    padding: 16px;
 
-    input {
-      width: 100%;
-      border-radius: 4px;
-      border: 1px solid $primary-color;
-      padding: 8px;
-      height: 48px;
-    }
-
-    .clear {
-      border: none;
-      background-color: transparent;
-      position: absolute;
-      right: 16px;
-      width: 48px;
-      height: 48px;
-      font-weight: bold;
-    }
-  }
-
-  .flashcard-tile {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    width: 100%;
-    margin-bottom: 8px;
-    cursor: pointer;
-
-    &.primitive {
-      .key-word {
-        &:after {
-          content: "*";
-        }
-      }
-    }
-
-    .frame {
+    .flashcard-search {
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 60px;
-      height: 48px;
-      font-weight: bold;
-    }
-
-    .key-word {
       width: 100%;
+
+      input {
+        width: 100%;
+        border-radius: 4px;
+        border: 1px solid $primary-color;
+        padding: 8px;
+        height: 48px;
+      }
+
+      .clear {
+        border: none;
+        background-color: transparent;
+        position: absolute;
+        right: 0;
+        width: 48px;
+        height: 48px;
+        font-weight: bold;
+      }
     }
 
-    img {
-      width: 48px;
-      height: 48px;
-      min-width: 48px;
-      min-height: 48px;
-      object-fit: cover;
-    }
+    .flashcard-sort {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    button {
-      height: 48px;
-      margin-left: 16px;
-      margin-right: 16px;
-      background-color: transparent;
-      border: none;
-      cursor: pointer;
+      .toggle {
+        background-color: white;
+        border: 1px solid #ccc;
+        width: 48px;
+        height: 48px;
+        margin-left: 8px;
+        border-radius: 4px;
+      }
+
+      .sort-menu {
+        position: absolute;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        z-index: 3;
+        background-color: white;
+        width: 150px;
+        top: 40px;
+        right: 40px;
+        border-radius: 4px;
+        box-shadow: 0 0 0 0.1px #ccc;
+
+        .sort {
+          width: 100%;
+          height: 48px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          padding: 8px;
+          vertical-align: bottom;
+
+          &.active {
+            span {
+              font-weight: bold;
+            }
+          }
+
+          &:not(:last-of-type) {
+            border-bottom: 1px solid #eee;
+          }
+        }
+      }
     }
   }
 }

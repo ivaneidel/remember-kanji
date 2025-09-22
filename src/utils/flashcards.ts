@@ -2,6 +2,18 @@ import { Flashcard } from "../types";
 import { dateToIsoWithTimezone } from "./date";
 import { getAllFlashcards } from "./db";
 
+/**
+ * Mutates array
+ */
+export const defaultFlashcardSort = (flashcards: Flashcard[]) =>
+  flashcards.sort((f1, f2) => {
+    if (!f1.frame) return -1;
+
+    if (!f2.frame) return 1;
+
+    return f1.frame < f2.frame ? -1 : 1;
+  });
+
 export const exportFlashcards = async () => {
   const date = dateToIsoWithTimezone(new Date())
     .replaceAll("-", "_")

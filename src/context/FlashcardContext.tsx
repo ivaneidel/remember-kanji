@@ -16,6 +16,7 @@ import {
   saveAllFlashcardsMetadata,
 } from "../utils/db";
 import { getDefaultMetadata } from "../utils/srs";
+import { defaultFlashcardSort } from "../utils/flashcards";
 
 type FlashcardsById = {
   [id: string]: Flashcard;
@@ -38,9 +39,7 @@ type ContextType = {
   deleteFlashcardMetadataById: (id: string) => void;
 };
 
-const FlashcardContext = createContext<ContextType | undefined>(
-  undefined
-);
+const FlashcardContext = createContext<ContextType | undefined>(undefined);
 
 export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
   const [flashcards, setFlashcards] = useState<Flashcard[]>([]);
@@ -92,13 +91,7 @@ export const FlashcardProvider = ({ children }: { children: ReactNode }) => {
   );
 
   const onSetFlashcards = useCallback((newFlashcards: Flashcard[]) => {
-    newFlashcards.sort((f1, f2) => {
-      if (!f1.frame) return -1;
-
-      if (!f2.frame) return 1;
-
-      return f1.frame < f2.frame ? -1 : 1;
-    });
+    defaultFlashcardSort(newFlashcards);
 
     // Set them in the state
     setFlashcards(newFlashcards);
